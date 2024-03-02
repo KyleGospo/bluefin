@@ -19,14 +19,10 @@ jobs:
       tag: ${{ steps.release-please.outputs.tag_name }}
       upload_url: ${{ steps.release-please.outputs.upload_url }}
     steps:
-      - uses: google-github-actions/release-please-action@v3
-        id: release-please
-        with:
-          release-type: node
-          package-name: release-please-action
       - name: Install MarkdownToBBCodeSteam
         run: dotnet tool install -g Converter.MarkdownToBBCodeSteam.Tool
         shell: pwsh
-      - run: |
+      - name: Create Steam BBCode Changelog
+        run: |
           markdown_to_bbcodesteam -i "/CHANGELOG.md" -o "/CHANGELOG-BBCODE.txt";
         shell: pwsh
